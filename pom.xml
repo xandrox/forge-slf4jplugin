@@ -39,6 +39,11 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>org.jboss.seam.render</groupId>
+        <artifactId>seam-render</artifactId>
+        <version>1.0.0.Final</version>
+      </dependency>
+      <dependency>
         <groupId>org.jboss.forge</groupId>
         <artifactId>forge-test-harness</artifactId>
         <version>${forge.api.version}</version>
@@ -89,10 +94,9 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.6.1</version>
-      <scope>compile</scope>
+      <groupId>org.jboss.seam.render</groupId>
+      <artifactId>seam-render</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <repositories>

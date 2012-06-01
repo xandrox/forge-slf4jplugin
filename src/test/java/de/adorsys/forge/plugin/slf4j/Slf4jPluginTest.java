@@ -24,7 +24,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.forge.parser.JavaParser;
 import org.jboss.forge.parser.java.JavaClass;
 import org.jboss.forge.parser.java.JavaSource;
+import org.jboss.forge.project.Project;
 import org.jboss.forge.project.facets.JavaSourceFacet;
+import org.jboss.forge.project.facets.ResourceFacet;
 import org.jboss.forge.resources.java.JavaResource;
 import org.jboss.forge.shell.events.PickupResource;
 import org.jboss.forge.test.AbstractShellTest;
@@ -33,6 +35,9 @@ import org.junit.Test;
 
 import de.adorsys.forge.plugin.slf4j.Slf4jPlugin;
 
+/**
+ * @author Sandro Sonntag - Adorsys
+ */
 public class Slf4jPluginTest extends AbstractShellTest {
 	
 	@Inject
@@ -45,21 +50,40 @@ public class Slf4jPluginTest extends AbstractShellTest {
 	}
 
 	@Test
-	public void testSetup() throws Exception {
-		getShell().execute("slf4j setup");
+	public void testSetupLog4J() throws Exception {
+		Project project = initializeJavaProject();
+		queueInputLines("30", "30");
+		getShell().execute("slf4j setup --log-backend LOG4J");
+		
+		ResourceFacet facet = project.getFacet(ResourceFacet.class);
+		Assert.assertNotNull(facet.getResource("/log4j.xml"));
+	}
+	
+	@Test
+	public void testSetupJBoss() throws Exception {
+		Project project = initializeJavaProject();
+		queueInputLines("30");
+		getShell().execute("slf4j setup --log-backend JBOSS_AS_7");
+		
+		ResourceFacet facet = project.getFacet(ResourceFacet.class);
+		Assert.assertNotNull(facet.getResource("/META-INF/MANIFEST.MF"));
 	}
 	
 	@Test
 	public void testUninstall() throws Exception {
+		initializeJavaProject();
+		queueInputLines("30", "30");
 		getShell().execute("slf4j setup");
 		getShell().execute("slf4j uninstall");
 	}
 
 	@Test
 	public void testAddLogger() throws Exception {
+		Project project = initializeJavaProject();
+		queueInputLines("30", "30");
 		getShell().execute("slf4j setup");
 
-		JavaSourceFacet javaSourceFacet = getProject().getFacet(JavaSourceFacet.class);
+		JavaSourceFacet javaSourceFacet = project.getFacet(JavaSourceFacet.class);
 		JavaSource<?> testClass = JavaParser.parse("public class Test {}");
 		testClass.setPackage("test");
 		JavaResource javaTestResource = javaSourceFacet.saveJavaSource(testClass);
