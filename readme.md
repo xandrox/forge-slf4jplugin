@@ -21,7 +21,7 @@ If you want a Logger constant like this:
 
 just call:
 
-  slf4j addlogger com.example.slf4jtest.Test.java
+    slf4j addlogger com.example.slf4jtest.Test.java
   
 
 Remove slf4j from your project
