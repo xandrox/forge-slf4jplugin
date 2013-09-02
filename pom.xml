@@ -15,7 +15,7 @@
     </license>
   </licenses>
   <properties>
-    <forge.api.version>1.0.5.Final</forge.api.version>
+    <forge.api.version>1.4.0.Final</forge.api.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -117,13 +117,13 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
-      <plugin>
+      <!-- plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
         <artifactId>maven-license-plugin</artifactId>
         <configuration>
           <header>src/etc/header.txt</header>
         </configuration>
-      </plugin>
+      </plugin-->
     </plugins>
   </build>
 </project>
